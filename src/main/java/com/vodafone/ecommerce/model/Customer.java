@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@DiscriminatorValue(value="0")
 public class Customer extends User
 {
     
