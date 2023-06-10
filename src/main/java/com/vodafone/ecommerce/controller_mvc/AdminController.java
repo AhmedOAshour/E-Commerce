@@ -1,4 +1,4 @@
-package com.vodafone.ecommerce.controller;
+package com.vodafone.ecommerce.controller_mvc;
 
 import com.vodafone.ecommerce.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;

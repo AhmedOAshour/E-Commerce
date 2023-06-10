@@ -1,4 +1,4 @@
-package com.vodafone.ecommerce.controller;
+package com.vodafone.ecommerce.controller_mvc;
 
 import com.vodafone.ecommerce.model.Customer;
 import com.vodafone.ecommerce.service.CustomerService;

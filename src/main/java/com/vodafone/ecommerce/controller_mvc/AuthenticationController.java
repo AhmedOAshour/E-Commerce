@@ -1,4 +1,4 @@
-package com.vodafone.ecommerce.controller;
+package com.vodafone.ecommerce.controller_mvc;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
