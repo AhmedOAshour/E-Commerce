@@ -1,6 +1,9 @@
 package com.vodafone.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,12 +33,20 @@ public class Order {
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @NotNull(message = "Cant create empty order")
     private Set<OrderItem> orderItems;
 
     @CreationTimestamp
+    @NotNull
     private LocalDateTime createdAt;
 
+//    @NotBlank
     private String paymentMethod; //enum
 
+//    @NotBlank
     private String status; //enum
+
+    private String address;
+
+//    private String cardNumber;
 }

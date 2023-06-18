@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>(Customer Settings)</title>
+    <th:block th:replace="~{partials/style :: bootstrap-css}"/>
+
+</head>
+<body>
+    <th:block th:replace="~{partials/navbar :: navbar}"/>
+
+<!--<a class="btn btn-primary" th:href="@{/customer/{customerId}/account/settings/edit/email(customerId=${customerId})}">Change Email</a>-->
+<a class="btn btn-secondary" th:href="@{/customer/{customerId}/account/settings/edit/password(customerId=${customerId})}">Change Password</a>
+<a class="btn btn-primary" th:href="@{/customer/{customerId}/account/settings/edit/name(customerId=${customerId})}">Change Name</a>
+
+
+<th:block th:replace="~{partials/scripts :: scripts}"/>
+</body>
+</html>

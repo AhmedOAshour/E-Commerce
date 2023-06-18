@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <!--    <th:block th:replace="fragments/general.html :: header-files"/>-->
+    <title>Admin Products Management</title>
+
+    <th:block th:replace="~{partials/style :: bootstrap-css}"/>
+</head>
+<body>
+<!--<th:block th:replace="fragments/general.html :: admin-nav"/>-->
+<!-- Page content-->
+<div class="container p-6 pt-3">
+    <th:block th:replace="~{partials/navbar :: navbar}"/>
+    <div class="table-responsive">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="border-0 bg-light" scope="col">
+                    <div class="p-2 px-3 text-uppercase">Date</div>
+                </th>
+                <th class="border-0 bg-light" scope="col">
+                    <div class="p-2 px-3 text-uppercase">Order Number</div>
+                </th>
+                <th class="border-0 bg-light" scope="col">
+                    <div class="py-2 text-uppercase">Action</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order :${all_orders}">
+                <td class="border-0 align-middle"><strong th:text="${order.createdAt}">Order Date</strong></td>
+                <td class="border-0 align-middle"><strong th:text="${order.id}">Order ID</strong></td>
+
+                <td>
+                    <a class="btn btn-primary align-middle"
+                       th:href="@{/customer/{customerId}/order/{orderId}(customerId=${customerId}, orderId=${order.id})}">View</a>
+                </td>
+
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <span th:text="${totalPrice}">Total Price is </span>
+</div>
+<th:block th:replace="~{partials/scripts :: scripts}"/>
+</body>
+</html>

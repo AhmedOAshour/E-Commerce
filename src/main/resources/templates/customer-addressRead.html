@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:replace="~{partials/style :: bootstrap-css}"/>
+</head>
+
+<body th:object="${address}">
+    <th:block th:replace="~{partials/navbar :: navbar}"/>
+
+<a th:text="${address.address}">Address</a>
+<th:block th:replace="~{partials/scripts :: scripts}"/>
+</body>
+
+</html>

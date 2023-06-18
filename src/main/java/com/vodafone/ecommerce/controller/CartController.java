@@ -3,6 +3,7 @@ package com.vodafone.ecommerce.controller;
 import com.vodafone.ecommerce.model.Cart;
 import com.vodafone.ecommerce.model.CartItem;
 import com.vodafone.ecommerce.model.SecurityUser;
+import com.vodafone.ecommerce.model.dto.CartItemDTO;
 import com.vodafone.ecommerce.service.CartService;
 import com.vodafone.ecommerce.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
 @RequestMapping("/customer/{customerId}/cart")
 @PreAuthorize("hasAuthority('Customer')")
 public class CartController {
@@ -34,16 +35,19 @@ public class CartController {
     @PostMapping
     public ResponseEntity<Cart> addCartItem(@PathVariable(name = "customerId") Long customerId,
                                             @RequestBody CartItem cartItem,
-                                            @AuthenticationPrincipal SecurityUser user) { //TODO: handle image
+                                            @AuthenticationPrincipal SecurityUser user) {
         AuthUtil.isNotLoggedInUserThrowException(customerId, user.getUser().getId());
-        Cart cartRes = cartService.addCartItem(customerId, cartItem);
+        CartItemDTO cartItemDTO = new CartItemDTO();
+        cartItemDTO.setQuantity(cartItem.getQuantity());
+        cartItemDTO.setProductId(cartItemDTO.getProductId());
+        Cart cartRes = cartService.addCartItem(customerId, cartItemDTO);
         return new ResponseEntity<>(cartRes, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{cartItemId}")
     public ResponseEntity<Cart> updateCartItem(@PathVariable(name = "customerId") Long customerId,
                                                @PathVariable(name = "cartItemId") Long cartItemId,
-                                               @RequestBody CartItem cartItem,
+                                               @RequestBody CartItemDTO cartItem,
                                                @AuthenticationPrincipal SecurityUser user) {
         AuthUtil.isNotLoggedInUserThrowException(customerId, user.getUser().getId());
         Cart cartRes = cartService.updateCartItemQuantity(cartItem, customerId, cartItemId);

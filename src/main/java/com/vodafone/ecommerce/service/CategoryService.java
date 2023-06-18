@@ -1,6 +1,7 @@
 package com.vodafone.ecommerce.service;
 
 import com.vodafone.ecommerce.exception.DuplicateEntityException;
+import com.vodafone.ecommerce.exception.InvalidInputException;
 import com.vodafone.ecommerce.exception.NotFoundException;
 import com.vodafone.ecommerce.model.Category;
 import com.vodafone.ecommerce.repository.CategoryRepo;
@@ -32,7 +33,20 @@ public class CategoryService {
         return category.get();
     }
 
+    public Category getCategoryByNameIgnoreCases(String name)
+    {
+        Optional<Category> category = categoryRepo.findByNameContainsIgnoreCase(name);
+        if (category.isEmpty()) {
+            throw new NotFoundException("Category with this name not found.");
+        }
+        return category.get();
+    }
+
     public Category addCategory(Category category) {
+        if (category.getName().trim().length() < 1) {
+            throw new InvalidInputException("Category name can't be empty");
+        }
+
         if (categoryRepo.findByName(category.getName()).isPresent()) {
             throw new DuplicateEntityException("Category with same name already exists.");
         }
@@ -41,6 +55,10 @@ public class CategoryService {
     }
 
     public Category updateCategory(Category category, Long id) {
+        if (category.getName().trim().length() < 1) {
+            throw new InvalidInputException("Category name can't be empty");
+        }
+
         if (categoryRepo.findById(id).isEmpty()) {
             throw new NotFoundException("Category id not found.");
         }

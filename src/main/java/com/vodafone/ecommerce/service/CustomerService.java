@@ -1,10 +1,13 @@
 package com.vodafone.ecommerce.service;
 
 import com.vodafone.ecommerce.exception.DuplicateEntityException;
+import com.vodafone.ecommerce.exception.InvalidInputException;
 import com.vodafone.ecommerce.exception.NotFoundException;
+import com.vodafone.ecommerce.exception.UserAlreadyExists;
 import com.vodafone.ecommerce.model.Cart;
 import com.vodafone.ecommerce.model.Customer;
 import com.vodafone.ecommerce.repository.CustomerRepo;
+import com.vodafone.ecommerce.util.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,14 @@ public class CustomerService {
     }
 
     public Customer addCustomer(Customer customer) {
+        if (!ValidationUtil.validateEmail(customer.getEmail())) {
+            throw new InvalidInputException("Invalid email");
+        }
+
+        if (customer.getName().trim().length() < 1) {
+            throw new InvalidInputException("Category name can't be empty");
+        }
+
         if (customerRepo.findByEmail(customer.getEmail()).isPresent()) {
             throw new DuplicateEntityException("Account with this email already exists.");
         }
@@ -47,12 +58,22 @@ public class CustomerService {
     public Customer updateCustomer(Customer customer, Long id) {
         Optional<Customer> customerById = customerRepo.findById(id);
 
+        if (customer.getName().trim().length() < 1) {
+            throw new InvalidInputException("Category name can't be empty");
+        }
+
         if (customerById.isEmpty()) {
             throw new NotFoundException("Customer id not found.");
+        }
+
+        if (customerRepo.findByEmail(customer.getEmail()).isEmpty())
+        {
+            throw new UserAlreadyExists("Choose Different Email Address");
         }
         // TODO: limit email change?
         customer.setId(id);
         customer.setCart(customerById.get().getCart());
+        customer.setEmail(customerById.get().getEmail());
         return customerRepo.save(customer);
     }
 

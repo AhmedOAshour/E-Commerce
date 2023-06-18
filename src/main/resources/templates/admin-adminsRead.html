@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page For Admin (All Available Admins)</title>
+    <th:block th:replace="~{partials/style :: bootstrap-css}"/>
+
+</head>
+<body>
+
+<div class="container ">
+
+    <th:block th:replace="~{partials/navbar :: navbar}"/>
+    <div class="row">
+        <h1>List Of Admins (All Available Admins)</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-3">
+            <a th:href="@{/admin/add}" class="btn btn-primary">Add Admin</a>
+        </div>
+
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Admin Name</th>
+                <th>Admin Email</th>
+                <th>Admin Password</th>
+                <th>Account Activated</th>
+                <th>Admin Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="admin: ${all_admins}">
+            <td th:text="${admin.name}"></td>
+            <td th:text="${admin.email}"></td>
+            <td th:text="${admin.password}"></td>
+            <td>
+                <span th:switch="${admin.enabled}">
+                    <input th:case="${true}" type="checkbox" name="admin-enabled" checked disabled>
+                    <input th:case="${false}" type="checkbox" name="admin-disabled" disabled>
+                </span>
+            </td>
+            <td >
+                <a class="btn btn-primary" th:href="@{/admin/{id}/edit(id=${admin.id})}">Edit</a>
+                <a class="btn btn-secondary" th:href="@{/admin/{id}/delete(id=${admin.id})}">Delete</a>
+
+            </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+
+
+</div>
+
+<th:block th:replace="~{partials/scripts :: scripts}"/>
+</body>
+</html>

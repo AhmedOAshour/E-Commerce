@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+    <th:block th:replace="~{partials/style :: bootstrap-css}"/>
+
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="~{partials/navbar :: navbar}"/>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h1 class="text-center">Create New Category</h1>
+            <div class="card-body">
+                <form th:action="@{/category}"
+                      th:object="${category}"
+                      method="post">
+
+                    <div class="form-group">
+
+                        <label>Category Name</label>
+                        <input type="text"
+                               name="name"
+                               th:field="*{name}"
+                               class="form-control"
+                               placeholder="Enter a category Name"/>
+                    </div>
+
+
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn=primary">
+                            Submit
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:replace="~{partials/scripts :: scripts}"/>
+</body>
+</html>
